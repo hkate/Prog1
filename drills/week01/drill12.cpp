@@ -108,7 +108,7 @@ int main(){
         win.set_label("Canvas 12");
         win.wait_for_button();
         
-
+        
     } catch (exception& e) {
         cerr << "exception: " << e.what()<< '\n';
         return 1; 
