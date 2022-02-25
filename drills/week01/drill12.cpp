@@ -55,7 +55,7 @@ int main(){
         poly_rect.add(Point{200, 100});
         poly_rect.add(Point{100, 100});
         poly_rect.add(Point{50, 75});
-        
+
         win.attach(poly_rect);
         win.set_label("Draw rectangle");
         win.wait_for_button();
@@ -107,11 +107,11 @@ int main(){
         win.attach(cal);
         win.set_label("Canvas 12");
         win.wait_for_button();
-        
-        
+
+
     } catch (exception& e) {
         cerr << "exception: " << e.what()<< '\n';
-        return 1; 
+        return 1;
     } catch (...) {
         cerr << "error\n";
         return 2;
