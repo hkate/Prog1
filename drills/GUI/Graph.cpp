@@ -191,6 +191,8 @@ int init_suffix_map()
 {
 	suffix_map["jpg"] = Suffix::jpg;
 	suffix_map["JPG"] = Suffix::jpg;
+    suffix_map["PNG"] = Suffix::jpg;
+    suffix_map["png"] = Suffix::jpg;
 	suffix_map["jpeg"] = Suffix::jpg;
 	suffix_map["JPEG"] = Suffix::jpg;
 	suffix_map["gif"] = Suffix::gif;

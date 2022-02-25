@@ -130,7 +130,7 @@ protected:
 
 private:
 	vector<Point> points;
-	Color lcolor {fl_color()};
+	Color lcolor {static_cast<int>(fl_color())};
 	Line_style ls {0};
 	Color fcolor {Color::invisible};
 };
@@ -298,7 +298,7 @@ Suffix::Encoding get_encoding(const string& s);
 
 struct Image : Shape {
 private:
-	int w, h, cx, cy;
+	int w, h, cx{}, cy{};
 	Fl_Image* p;
 	Text fn;
 public:

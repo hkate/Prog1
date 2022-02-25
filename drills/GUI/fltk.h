@@ -1,5 +1,5 @@
 #ifndef FLTK_GUARD
-#define FLTK_GUARD 1
+#define FLTK_GUARD
 
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H" 
@@ -10,8 +10,8 @@
 #include "FL/fl_draw.H"
 #include "FL/Enumerations.H"
 
-#include "Fl/Fl_JPEG_Image.H"
-#include "Fl/Fl_GIF_Image.H"
+#include "FL/Fl_JPEG_Image.H"
+#include "FL/Fl_GIF_Image.H"
 
 #endif
 
