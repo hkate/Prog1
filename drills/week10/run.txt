@@ -1,0 +1,1 @@
+g++ -w -Wall -std=c++11 GUI/Graph.cpp GUI/Window.cpp GUI/GUI.cpp GUI/Simple_Window.cpp drill24.cpp `fltk-config --ldflags --use-images` -o a2.out
