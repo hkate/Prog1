@@ -1,88 +1,93 @@
-//A kulcs az akkor jó, ha egyediséget szeretnénk használni
-//A set-be nem lehet duplikáció
-
+#include <algorithm>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
 #include <list>
-#include <array>
-#include <algorithm>
-#include <map>
 
 using namespace std;
 
-template<typename K, typename V>
-void print(map<K,V>& m){
-    /*for(pair<K,V> p : m){
-        cout << p.first() << " " << p.second() << endl;
-    }*/
+struct Item {
+    string name;
+    int iid;
+    double value;
+    Item() : name("unknown"), iid(-1), value(0) {}
+    Item(string n, int id, double v) : name(n), iid(id), value(v) {}
+};
 
-    for(auto& p : m){
-        cout << p.first << "\t" << p.second << endl;
-    }
+ostream& operator<<(ostream& os, const Item& item) {
+    return os << "{ " << item.name << " " << item.iid << " " << item.value << " }" << std::endl;
 }
 
-void read_map(map<string, int>& m){
-    string s;
-    int i;
-    while(m.size()<5){
-        cin >> s >> i;
-        m[s] = i;
-        //m.insert(make_pair(s,i));                                //az insert NEM írja felül a megadott értéket
+istream& operator>>(istream& is, Item& item) {
+    char dummy;
+    is >> dummy;
+    if (dummy != '{') {
+        is.unget();
+        return is;
     }
+    is >> item.name >> item.iid >> item.value;
+    return is;
 }
 
-void msi_to_mis(map<string, int>& m1, map<int,string>& m2){
-    for(auto&a : m1){
-        m2.insert(make_pair(a.second,a.first));
+struct by_name {
+    bool operator()(const Item& a, const Item& b) const {
+        return a.name < b.name;
     }
-}
+};
 
-int main(){
-
-    try{
-        map<string, int> msi;
-        msi["a"]=2;
-        msi["b"]=5;
-        msi["c"]=14;
-        msi["d"]=16;
-        msi["e"]=7;
-        msi["f"]=11;
-        msi["qwerty"]=8;
-        msi["asd"]=6;
-        msi["dda"]=3;
-        msi["adwd"]=1;
-
-        print(msi);
-
-        msi.erase("a");                     // 'a' elem törlése
-        cout << endl;
-        print(msi);
-
-        msi.erase(msi.begin(),msi.end());  // msi törlése elejétől a végéig
-        cout << endl;
-        print(msi);
-
-        cout << "Adj meg 10 kulcs-érték párt: \n";
-        read_map(msi);
-        print(msi);
-
-        int sum=0;
-        for (auto& a: msi)
-        {
-            sum+=a.second;
-        }
-        cout << "A számok összege: " << sum << endl; 
-
-        map<int, string> mis;
-        msi_to_mis(msi,mis);
-        print(mis);
-
-    }catch(exception& e){
-        cerr << "Exception: " << e.what() << '\n';
-        return 1;
-    }catch(...){
-        cerr << "Unknown exception" << '\n';
-        return 2;
+struct by_id {
+    bool operator()(const Item& a, const Item& b) const {
+        return a.iid < b.iid;
     }
-    return 0;
+};
+
+struct by_value {
+    bool operator()(const Item& a, const Item& b) const {
+        return a.value > b.value;
+    }
+};
+
+int main() {
+    vector<Item> vi;
+    ifstream fileIn {"data.txt"};
+    for (int i = 0; i < 10; i++) {
+        Item item;
+        fileIn >> item;
+        vi.push_back(item);
+    }
+
+    // sort with struct as predicate
+    std::sort(vi.begin(), vi.end(), by_name());
+
+    std::sort(vi.begin(), vi.end(), by_id());
+
+    std::sort(vi.begin(), vi.end(), by_value());
+
+    vi.push_back(Item{"horse shoe", 99, 12.34});
+    vi.push_back(Item{"Canon S400", 9988, 499.95});
+
+    // see
+    // https://stackoverflow.com/a/16013546
+    // and
+    // https://stackoverflow.com/a/9053941
+    vi.erase(std::remove_if(vi.begin(), vi.end(), [](const Item& item) { return item.name == "apple" || item.name == "banana"; }));
+
+    vi.erase(std::remove_if(vi.begin(), vi.end(), [](const Item& item) { return item.iid == 10 || item.iid == 12; }));
+
+    list<Item> li(vi.begin(), vi.end());
+
+        // sort with lambda as predicate
+    li.sort([](const Item& a, const Item& b) { return a.name < b.name; });
+
+    li.sort([](const Item& a, const Item& b) { return a.iid < b.iid; });
+
+    li.sort([](const Item& a, const Item& b) { return a.value < b.value; });
+
+    li.push_back(Item{"horse shoe", 99, 12.34});
+    li.push_back(Item{"Canon S400", 9988, 499.95});
+
+    li.remove_if([](const Item& item) { return item.name == "apple" || item.name == "banana"; });
+
+    li.remove_if([](const Item& item) { return item.iid == 10 || item.iid == 12; });
 }
