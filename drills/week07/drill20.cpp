@@ -26,7 +26,7 @@ void inc(C& c, int n){
 }
 
 template<typename iter1, typename iter2>
-iter2 orai_copy(iter1 f1, iter1 e1, iter2 f2){  //mettől, meddig, hova
+iter2 orai_copy(iter1 f1, iter1 e1, iter2 f2){
     for (iter1 p =f1; p!=e1; ++p){
         *f2++=*p;
     }
@@ -56,7 +56,7 @@ int main(){
     for (int i = 0; i < size; ++i) arr[i] = i;
 
     array<int,size> ai;
-    copy(arr,arr+size,ai.begin());      //input, inputm output
+    copy(arr,arr+size,ai.begin());
 
     vector<int> vi(size);
     copy(arr,arr+size,vi.begin());
