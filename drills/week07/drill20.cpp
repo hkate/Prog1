@@ -26,7 +26,7 @@ void inc(C& c, int n){
 }
 
 template<typename iter1, typename iter2>
-iter2 orai_copy(iter1 f1, iter1 e1, iter2 f2){
+iter2 orai_copy(iter1 f1, iter1 e1, iter2 f2){  //mettől, meddig, hova
     for (iter1 p =f1; p!=e1; ++p){
         *f2++=*p;
     }
@@ -56,7 +56,7 @@ int main(){
     for (int i = 0; i < size; ++i) arr[i] = i;
 
     array<int,size> ai;
-    copy(arr,arr+size,ai.begin());
+    copy(arr,arr+size,ai.begin());      //input, inputm output
 
     vector<int> vi(size);
     copy(arr,arr+size,vi.begin());
@@ -87,6 +87,27 @@ int main(){
     print(ai2);
     print(vi2);
     print(li2);
+
+    //3-as értéket keressük
+    vector<int>::iterator vit;
+    vit = find(vi2.begin(), vi2.end(),3);
+
+    if(vit != vi2.end()){
+        cout << "Found at: " << distance(vi2.begin(), vit) << endl;
+    }else{
+        cout << "Not found" << endl;
+    }
+    
+    //27-es értéket keressük
+	vector<int>::iterator vit2;
+	vit2 = std::find(vi2.begin(), vi2.end(), 27);
+	
+    if( vit2 != vi2.end()){
+		cout << "Found at " << distance(vi2.begin(), vit2) << endl;
+	}
+	else {
+		cout << "Not found" << endl;
+	}
 
     return 0;
 }
